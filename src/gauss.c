@@ -8,33 +8,25 @@
  */
 int eliminate(Matrix *mat, Matrix *b){
 
-	int nr = mat->r;
-	int nc = mat->c;
-
-	double *rzedy = malloc(sizeof(double) * nr);
-	double *wyz_r = malloc(sizeof(double) * nr);
-
-	for(int k = 0; k < nc; k++)
+	double* wyznacznik = malloc(sizeof(double)*mat->r);
+	double* wiersz = malloc(sizeof(double)*mat->c);
+	for(int wk = 0; wk < mat->r; wk++)
 	{
-  		for(int i = 0; i < nr; i++)
-			rzedy[i] = mat->data[i][k];
-	
-		for(int j = 0; j < nr; j++)
-		{
-			wyz_r[j] = rzedy[k+j+1] / rzedy[k];
+		double elem = mat->data[wk][wk];
 
-			for(int l=0; l < nr; l++)
-			{
-				for(int p = 0; p < nc; p++)
-				{
-					if (k + p + 1 < nc && l < nr) 
-					{
-                        mat->data[k+p+1][l] -= mat->data[k+p+1][l] * wyz_r[p];
-					}
-				}
+		for(int i = wk+1; i < mat->r; i++)
+			wyznacznik[i] = mat->data[i][wk]/elem;
+
+		for(int w = wk+1; w < mat->r; w++)
+		{
+			for(int i = wk; i < mat->c; i++){
+				wiersz[i] = wyznacznik[w]*mat->data[wk][i];
 			}
+			for(int i = wk; i < mat->c; i++)
+				mat->data[w][i] -= wiersz[i];	
 		}
 	}
-		return 0;
+	printToScreen(mat);
+	return 0;
 }
 
