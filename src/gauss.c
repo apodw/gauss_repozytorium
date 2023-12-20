@@ -23,9 +23,13 @@ int eliminate(Matrix *mat, Matrix *b){
 				wiersz[i] = wyznacznik[w]*mat->data[wk][i];
 			}
 			for(int i = wk; i < mat->c; i++)
-				mat->data[w][i] -= wiersz[i];	
+				mat->data[w][i] -= wiersz[i];
+
+            b->data[w][0] -= b->data[wk][0]*wyznacznik[w];
 		}
 	}
+    free(wyznacznik);
+    free(wiersz);
 	
 	return 0;
 }
