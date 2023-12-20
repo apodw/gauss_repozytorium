@@ -26,7 +26,7 @@ int eliminate(Matrix *mat, Matrix *b){
 				mat->data[w][i] -= wiersz[i];	
 		}
 	}
-	printToScreen(mat);
+	
 	return 0;
 }
 
