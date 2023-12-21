@@ -2,18 +2,22 @@
 #include <stdlib.h>
 #include <math.h>
 #define DOKL 0.00001 //Dokładność do 5 cyfr po przecinku
+
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
  */
 
-void pivot(Matrix *mat, Matrix *b, int wk)
+void pivot(Matrix *mat, Matrix *b, int k)
 {
-    int max = wk;
-    for(int i = wk+1; i < mat->r; i++)
+    int max = k;
+    double maxval = fabs(mat->data[k][k]);
+    for(int i = k+1; i < mat->r; i++)
     {
-        if(fabs(mat->data[i][wk]) > fabs(mat->data[max][wk]))
+        if(fabs(mat->data[i][k]) > maxval) {
             max = i;
+            maxval = fabs(mat->data[i][k]);
+        }
     }
     double* temp = mat->data[wk];
     mat->data[wk] = mat->data[max];
@@ -28,6 +32,7 @@ int eliminate(Matrix *mat, Matrix *b){
 
 	double* wyznacznik = malloc(sizeof(double)*mat->r);
 	double* wiersz = malloc(sizeof(double)*mat->c);
+
 	for(int wk = 0; wk < mat->r; wk++)
 	{
         pivot(mat, b, wk);
@@ -52,6 +57,7 @@ int eliminate(Matrix *mat, Matrix *b){
 
     free(wyznacznik);
     free(wiersz);
+
 	
 	return 0;
 }
