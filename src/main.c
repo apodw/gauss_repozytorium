@@ -17,12 +17,32 @@ int main(int argc, char ** argv) {
 	printToScreen(b);
 
 	res = eliminate(A,b);
+    if(res == 1)
+    {
+        printf("Macierz osobliwa!\n");
+        freeMatrix(A);
+        freeMatrix(b);
+        return 0;
+    }
 	x = createMatrix(b->r, 1);
 	if (x != NULL) {
 		res = backsubst(x,A,b);
+        if(res != 0)
+        {
+            freeMatrix(x);
+            freeMatrix(A);
+            freeMatrix(b);
+
+            if(res == 1)
+                printf("Element na diagonalu jest równy 0!\n");
+            if(res == 2)
+                printf("Macierz nie jest kwadratowa!\n");
+
+            return 0;
+        }
 
 		printToScreen(x);
-	  freeMatrix(x);
+	    freeMatrix(x);
 	} else {
 					fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
 	}
