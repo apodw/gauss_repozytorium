@@ -19,12 +19,12 @@ void pivot(Matrix *mat, Matrix *b, int k)
             maxval = fabs(mat->data[i][k]);
         }
     }
-    double* temp = mat->data[wk];
-    mat->data[wk] = mat->data[max];
+    double* temp = mat->data[k];
+    mat->data[k] = mat->data[max];
     mat->data[max] = temp;
 
-    temp = b->data[wk];
-    b->data[wk] = b->data[max];
+    temp = b->data[k];
+    b->data[k] = b->data[max];
     b->data[max] = temp;
 }
 
@@ -57,7 +57,6 @@ int eliminate(Matrix *mat, Matrix *b){
 
     free(wyznacznik);
     free(wiersz);
-
 	
 	return 0;
 }
